@@ -3,22 +3,23 @@ NIST NVD CPE Extractor 🛡️
 Extract Vendors and Products from NIST NVD CPE Database - Zero configuration, auto-saves API key.
 
 ✨ Quick Demo
-bash
-$ python nvd_cpe_extractor.py
+
+python nvd_cpe_extractor.py
+
 # 1. Enter API key once → auto-saves to .env
 # 2. Search "fortinet" → lists exact vendors  
 # 3. Extract "fortinet" → 5000+ products → saves TXT
 
 🚀 Linux Installation (5 seconds)
 Automatic Installer
-bash
+
 chmod +x install_deps.sh
 ./install_deps.sh
 source nvd_env/bin/activate
 python nvd_cpe_extractor.py
 
 Manual (Ubuntu/Debian)
-bash
+
 sudo apt update
 sudo apt install -y python3 python3-pip python3-venv
 python3 -m venv nvd_env
@@ -30,7 +31,6 @@ Register: https://nvd.nist.gov/developers/request-an-api-key
 
 Fill form:
 
-text
 Name: Name Surname
 Email: your.email@company.it
 Organization: Your Company
@@ -48,7 +48,7 @@ No key	5	50
 With key	50	1,000
 
 📖 Usage Examples
-text
+
 🚀 NIST NVD CPE Extractor
 ==================================================
 1. 🔍 Search Vendor names (by keyword)
@@ -57,7 +57,7 @@ text
 ==================================================
 
 Example 1: Find Vendors
-text
+
 Enter keyword: forti
 ✅ 12 vendors found:
    1. fortinet
@@ -65,7 +65,7 @@ Enter keyword: forti
    3. fortiweb
 
 Example 2: Extract Products
-text
+
 Enter vendor: fortinet
 Category: *
 Fetching products... Progress: 2500/5432
@@ -74,7 +74,7 @@ Fetching products... Progress: 2500/5432
 ✅ Saved to fortinet_*_products.txt
 
 📁 Repository Structure
-text
+
 nvd_cpe_extractor/
 ├── nvd_cpe_extractor.py     # Main script
 ├── README.md               # This file
@@ -96,7 +96,7 @@ nvd_cpe_extractor/
 ✅ Category filtering (app/os/hw/all)
 
 🎯 Perfect For
-text
+
 ✅ SIEM/SOAR integrations
 ✅ Vulnerability scanners
 ✅ Asset inventory
@@ -105,14 +105,14 @@ text
 ✅ Red/Blue team recon
 🐳 Docker (Optional)
 
-text
+
 FROM python:3.11-slim
 WORKDIR /app
 COPY . .
 RUN pip install requests
 CMD ["python", "nvd_cpe_extractor.py"]
 
-bash
+
 docker build -t nvd-extractor .
 docker run -it -v $(pwd):/app nvd-extractor
 🛠️ Troubleshooting
@@ -138,7 +138,6 @@ Mauro Longhi | Seriate, Lombardia, Italy
 Linux - Proxmox - DevOps - Networking
 February 2026
 
-bash
 # Quick start alias
 alias nvd="source nvd_env/bin/activate && python nvd_cpe_extractor.py"
 
