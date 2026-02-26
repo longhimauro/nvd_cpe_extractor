@@ -8,7 +8,7 @@ def load_from_env_file(key):
     """Carica chiave da file .env manualmente."""
     if not os.path.exists(ENV_FILE):
         return None
-    
+
     try:
         with open(ENV_FILE, 'r') as f:
             for line in f:
@@ -39,7 +39,7 @@ def save_to_env_file(key, value):
                 lines.append(key_line)
         else:
             lines = [key_line]
-        
+
         with open(ENV_FILE, 'w') as f:
             f.writelines(lines)
         print(f"✅ API key saved to {ENV_FILE}")
@@ -49,17 +49,17 @@ def save_to_env_file(key, value):
 def get_api_config():
     """Load API key from .env file, environment, or prompt user."""
     api_key = os.getenv("NVD_API_KEY") or load_from_env_file("NVD_API_KEY")
-    
+
     if not api_key:
         print("\n[!] NVD_API_KEY not found in environment or .env file.")
         api_key = input("Enter your API Key (or press Enter to proceed limited): ").strip()
-        
+
         if api_key:
             save_to_env_file("NVD_API_KEY", api_key)
             os.environ["NVD_API_KEY"] = api_key  # Per sessione corrente
         else:
             print("Proceeding in limited mode (no API key - slower rate limits).")
-    
+
     return api_key
 
 def search_vendor_by_keyword(keyword):
@@ -103,7 +103,7 @@ def fetch_products(vendor, part="*"):
     all_products = set()
 
     print(f"Fetching products for vendor '{vendor}' (category: {part})...")
-    
+
     while True:
         try:
             response = requests.get(url, headers=headers, params=params, timeout=30)
@@ -111,10 +111,10 @@ def fetch_products(vendor, part="*"):
                 print("Rate limit hit! Waiting 30s...")
                 time.sleep(30)
                 continue
-            
+
             response.raise_for_status()
             data = response.json()
-            
+
             for item in data.get("products", []):
                 p = item['cpe']['cpeName'].split(':')
                 if len(p) > 4:
@@ -123,12 +123,12 @@ def fetch_products(vendor, part="*"):
             total = data.get("totalResults", 0)
             fetched = params["startIndex"] + len(data.get("products", []))
             print(f"Progress: {fetched}/{total} products")
-            
+
             if fetched >= total:
                 break
             params["startIndex"] += params["resultsPerPage"]
             time.sleep(6 if api_key else 30)
-            
+
         except Exception as e:
             print(f"Error fetching products: {e}")
             break
@@ -151,7 +151,7 @@ def main():
             if not keyword:
                 print("❌ Empty keyword. Try again.")
                 continue
-                
+
             results = search_vendor_by_keyword(keyword)
             if results:
                 print(f"\n✅ {len(results)} vendors found:")
@@ -165,14 +165,21 @@ def main():
             if not vendor:
                 print("❌ Empty vendor name. Try again.")
                 continue
-                
+
             category = input("Category [a=app, o=os, h=hw, *=all] (default *): ").strip() or "*"
             products = fetch_products(vendor, category)
-            
+
             print(f"\n✅ Total products found: {len(products)}")
             if products:
-                print("Products: " + ", ".join(products[:10]) + ("..." if len(products) > 10 else ""))
+                print("\n📋 Products list:")
+                # Lista puntata verticale per TUTTI i prodotti
+                for i, product in enumerate(products, 1):
+                    print(f"  • {product}")
                 
+                # Opzione per mostrare solo primi 10 se sono tanti
+                if len(products) > 10:
+                    print(f"\n   ... e altri {len(products) - 10} prodotti")
+
                 save_choice = input("\n💾 Save to TXT file? (y/n): ").strip().lower()
                 if save_choice == 'y':
                     filename = f"{vendor}_{category}_products.txt"
@@ -187,7 +194,7 @@ def main():
         elif choice == "3":
             print("👋 Goodbye!")
             break
-        
+
         else:
             print("❌ Invalid option. Please select 1, 2, or 3.")
 
