@@ -1,128 +1,128 @@
-NIST NVD CPE Extractor 🛡️
-
-Extract Vendors and Products from NIST NVD CPE Database - Zero configuration, auto-saves API key.
-
-✨ Quick Demo
-bash
-$ python nvd_cpe_extractor.py
-# 1. Enter API key once → auto-saves to .env
-# 2. Search "fortinet" → lists exact vendors  
-# 3. Extract "fortinet" → 5000+ products → saves TXT
-
-🚀 Linux Installation (5 seconds)
-Automatic Installer
-bash
-chmod +x install_deps.sh
-./install_deps.sh
-source nvd_env/bin/activate
+NIST NVD CPE Extractor 🛡️<br>
+<br>
+Extract Vendors and Products from NIST NVD CPE Database - Zero configuration, auto-saves API key.<br>
+<br>
+✨ Quick Demo<br>
 python nvd_cpe_extractor.py
+<br>
+1. Enter API key once → auto-saves to .env
+2. Search "fortinet" → lists exact vendors  
+3. Extract "fortinet" → 5000+ products → saves TXT
 
-Manual (Ubuntu/Debian)
-bash
-sudo apt update
-sudo apt install -y python3 python3-pip python3-venv
-python3 -m venv nvd_env
-source nvd_env/bin/activate
-pip install requests
-python nvd_cpe_extractor.py
-🔑 NIST NVD API Key (Free)
-Register: https://nvd.nist.gov/developers/request-an-api-key
+🚀 Linux Installation (5 seconds)<br>
+Automatic Installer<br>
+<br>
+chmod +x install_deps.sh<br>
+./install_deps.sh<br>
+source nvd_env/bin/activate<br>
+python nvd_cpe_extractor.py<br>
+<br>
+Manual (Ubuntu/Debian)<br>
+<br>
+sudo apt update<br>
+sudo apt install -y python3 python3-pip python3-venv<br>
+python3 -m venv nvd_env<br>
+source nvd_env/bin/activate<br>
+pip install requests<br>
+python nvd_cpe_extractor.py<br>
+🔑 NIST NVD API Key (Free)<br>
+Register: https://nvd.nist.gov/developers/request-an-api-key<br>
 
-Fill form:
-
-text
-Name: Name Surname
-Email: your.email@company.it
-Organization: Your Company
-Phone: + ...
-Verify email → Key in 1-2 days
+Fill form:<br>
+<br>
+Name: Name Surname<br>
+Email: your.email@company.it<br>
+Organization: Your Company<br>
+Phone: + ...<br>
+Verify email → Key in 1-2 days<br>
 
 Format: abc123def456ghi789jkl012mno345pqr
 
 First run → prompts key → auto-saves to .env
 Future runs → loads automatically ✅
 
-📊 Rate Limits Comparison
-Mode	Requests/30s	Requests/min
-No key	5	50
-With key	50	1,000
+📊 Rate Limits Comparison<br>
+Mode	Requests/30s	Requests/min<br>
+No key	5	50<br>
+With key	50	1,000<br>
+<br>
+📖 Usage Examples<br>
+<br>
+🚀 NIST NVD CPE Extractor<br>
+<br>
+1. 🔍 Search Vendor names (by keyword)<br>
+2. 📦 Extract all products for a Vendor  <br>
+3. ❌ Exit<br>
+<br>
+Example 1: Find Vendors<br>
+<br>
+Enter keyword: forti<br>
+✅ 12 vendors found:<br>
+   1. fortinet<br>
+   2. fortianalyzer<br>
+   3. fortiweb<br>
+<br>
+Example 2: Extract Products<br>
+<br>
+Enter vendor: fortinet<br>
+Category: *<br>
+Fetching products... Progress: 2500/5432<br>
+✅ Total products: 5432<br>
+💾 Save to TXT? (y/n): y<br>
+✅ Saved to fortinet_*_products.txt<br>
+<br>
+📁 Repository Structure<br>
+<br>
+nvd_cpe_extractor/<br>
 
-📖 Usage Examples
-text
-🚀 NIST NVD CPE Extractor
-==================================================
-1. 🔍 Search Vendor names (by keyword)
-2. 📦 Extract all products for a Vendor  
-3. ❌ Exit
-==================================================
+| File                          | Descrizione              |
+|-------------------------------|--------------------------|
+| `nvd_cpe_extractor.py`        | # Main script            |
+| `README.md`                   | # This file              |
+| `install_deps.sh`             | # Linux installer        |
+| `requirements.txt`            | # Python deps            |
+| `.env.example`                | # API key template       |
+| `.gitignore`                  | # Excludes .env          |
+| `fortinet_products.txt`       | # Example output         |
 
-Example 1: Find Vendors
-text
-Enter keyword: forti
-✅ 12 vendors found:
-   1. fortinet
-   2. fortianalyzer
-   3. fortiweb
 
-Example 2: Extract Products
-text
-Enter vendor: fortinet
-Category: *
-Fetching products... Progress: 2500/5432
-✅ Total products: 5432
-💾 Save to TXT? (y/n): y
-✅ Saved to fortinet_*_products.txt
+🛡️ Features<br>
+<br>
+✅ Zero external dependencies (uses requests)<br>
+✅ Auto-saves API key to .env (git-ignored)<br>
+✅ Intelligent rate limiting (6s with key, 30s without)<br>
+✅ Full CPE 2.3 support<br>
+✅ Category filtering (app/os/hw/all)<br>
+<br>
+🎯 Perfect For<br>
+<br>
+✅ SIEM/SOAR integrations<br>
+✅ Vulnerability scanners<br>
+✅ Asset inventory<br>
+✅ Compliance reporting<br>
+✅ Cybersecurity research<br>
+✅ Red/Blue team recon<br>
+🐳 Docker (Optional)<br>
+<br><br>
+FROM python:3.11-slim <br>
+WORKDIR /app <br>
+COPY . . <br>
+RUN pip install requests <br>
+CMD ["python", "nvd_cpe_extractor.py"] <br>
 
-📁 Repository Structure
-text
-nvd_cpe_extractor/
-├── nvd_cpe_extractor.py     # Main script
-├── README.md               # This file
-├── install_deps.sh         # Linux installer
-├── requirements.txt        # Python deps
-├── .env.example           # API key template
-├── .gitignore             # Excludes .env
-└── fortinet_products.txt  # Example output
 
-🛡️ Features
-✅ Zero external dependencies (uses requests)
-
-✅ Auto-saves API key to .env (git-ignored)
-
-✅ Intelligent rate limiting (6s with key, 30s without)
-
-✅ Full CPE 2.3 support
-
-✅ Category filtering (app/os/hw/all)
-
-🎯 Perfect For
-text
-✅ SIEM/SOAR integrations
-✅ Vulnerability scanners
-✅ Asset inventory
-✅ Compliance reporting
-✅ Cybersecurity research
-✅ Red/Blue team recon
-🐳 Docker (Optional)
-
-text
-FROM python:3.11-slim
-WORKDIR /app
-COPY . .
-RUN pip install requests
-CMD ["python", "nvd_cpe_extractor.py"]
-
-bash
-docker build -t nvd-extractor .
-docker run -it -v $(pwd):/app nvd-extractor
-🛠️ Troubleshooting
-Issue	Solution
-403 Rate Limit	Auto-retries after 30s
-Timeout	Network issue, retry
-.env permissions	chmod 600 .env
+docker build -t nvd-extractor . <br>
+docker run -it -v $(pwd):/app nvd-extractor <br>
+<br>
+🛠️ Troubleshooting<br>
+Issue	Solution<br>
+403 Rate Limit	Auto-retries after 30s <br>
+Timeout	Network issue, retry <br>
+.env permissions	chmod 600 .env <br><br>
 No products found	Try exact vendor name from option 1
-🤝 Contributing
-Fork repository
+<br>
+🤝 Contributing <br>
+Fork repository<br>
 
 Test with known vendors (cisco, fortinet, apache)
 
@@ -130,15 +130,14 @@ PR improvements
 
 ⭐ if useful!
 
-📄 License
-MIT License - Free for personal/commercial use.
+📄 License<br>
+MIT License - Free for personal/commercial use.<br>
+<br>
+Made for IT Infrastructure & Cybersecurity Pros<br>
+Mauro Longhi | Seriate, Lombardia, Italy<br>
+Linux - Proxmox - DevOps - Networking<br>
+February 2026<br>
 
-Made for IT Infrastructure & Cybersecurity Pros
-Mauro Longhi | Seriate, Lombardia, Italy
-Linux - Proxmox - DevOps - Networking
-February 2026
-
-bash
-# Quick start alias
+# Quick start alias<br>
 alias nvd="source nvd_env/bin/activate && python nvd_cpe_extractor.py"
 
